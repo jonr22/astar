@@ -7,6 +7,14 @@ import astar.info.Coordinate;
 import astar.info.Grid;
 import astar.info.Node;
 
+/**
+ * Abstract implementation of the A* algorithm, a subclass needs to implement
+ * the estimateDistance() function for this algorithm to work. This way the
+ * algorithm can be run with various heuristics.
+ * 
+ * @author Jonathan Reimels
+ *
+ */
 public abstract class Astar {
 	private ArrayList<Node> _closedNodes = new ArrayList<Node>();
 	private ArrayList<Node> _openNodes = new ArrayList<Node>();
@@ -36,6 +44,9 @@ public abstract class Astar {
 		return _runtime;
 	}
 	
+	/**
+	 * Re-Initialize internal state of algorithm
+	 */
 	public void reInit() {
 	    _closedNodes = new ArrayList<Node>();
 	    _openNodes = new ArrayList<Node>();
@@ -173,12 +184,8 @@ public abstract class Astar {
 			
 			// if the node is new, or it's distance would now be shorter
 			if (isNewNode || node.getDistance() > (_currentNode.getDistance() + distanceToNode)) {
-				// if the node has the same row or column as the current node, then it's a lateral movement, otherwise it's diagonal
-				/*if (node.getCoord().getRow() == _currentNode.getCoord().getRow() || node.getCoord().getCol() == _currentNode.getCoord().getCol()) {
-					node.setDistance(_currentNode.getDistance() + Grid.MOVE_ADJACENT);
-				} else {
-					node.setDistance(_currentNode.getDistance() + Grid.MOVE_DIAGONAL);
-				}*/
+			    
+			    // set distance of node
 				node.setDistance(_currentNode.getDistance() + distanceToNode);
 				
 				//set the nodes estimated distance (call to the method that must be implemented by the sub-class), and it's new parent

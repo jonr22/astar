@@ -3,6 +3,12 @@ package astar.pathfinder;
 import astar.info.Coordinate;
 import astar.info.Grid;
 
+/**
+ * The manhattan method involves treating the path as a city grid similar to how Manhattan is laid out
+ * 
+ * @author Jonathan Reimels
+ *
+ */
 public class ManhattanMethod extends Astar{
 	
 	protected int estimateDistance(Coordinate coord) {
