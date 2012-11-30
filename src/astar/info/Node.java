@@ -9,7 +9,7 @@ public class Node {
 	public Node() {}
 	
 	public Node(Coordinate coord) {
-		_coord = coord;
+		_coord = coord.clone();
 	}
 	
 	public Coordinate getCoord() {
@@ -17,7 +17,7 @@ public class Node {
 	}
 	
 	public void setCoord(Coordinate coord) {
-		_coord = coord;
+		_coord = coord.clone();
 	}
 	
 	public Node getParent() {

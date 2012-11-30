@@ -43,14 +43,14 @@ public class Grid {
 			if (_startCoord != null) {
 				_gridPath[_startCoord.getRow()][_startCoord.getCol()] = NodeType.EMPTY;
 			}
-			_startCoord = new Coordinate(coord);
+			_startCoord = coord.clone();
 		}
 		
 		if (value == NodeType.END) {
 			if (_endCoord != null) {
 				_gridPath[_endCoord.getRow()][_endCoord.getCol()] = NodeType.EMPTY;
 			}
-			_endCoord = new Coordinate(coord);
+			_endCoord = coord.clone();
 		}
 		
 		_gridPath[coord.getRow()][coord.getCol()] = value;

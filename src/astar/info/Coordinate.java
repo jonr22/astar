@@ -10,9 +10,8 @@ public class Coordinate {
 		_col = col;
 	}
 	
-	public Coordinate(Coordinate coord) {
-		_row = coord.getRow();
-		_col = coord.getCol();
+	public Coordinate clone() {
+		return new Coordinate(_row, _col);
 	}
 	
 	public void setRow(int row) {

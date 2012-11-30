@@ -293,10 +293,6 @@ public class AstarGui {
 	    }
     }
 	
-	private void clearPath() {
-		
-	}
-	
 	private Astar[] instantiateAlgorithms() {
 		AstarFactory.Implementation implementationValues[] = AstarFactory.Implementation.values();
 		Astar implementations[] = new Astar[implementationValues.length];
