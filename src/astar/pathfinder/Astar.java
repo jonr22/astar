@@ -26,7 +26,6 @@ public abstract class Astar {
 	 */
 	public void setGrid(Grid grid) {
 		_grid = grid;
-		_currentNode = new Node(_grid.getStart());
 	}
 	
 	/** 
@@ -37,6 +36,13 @@ public abstract class Astar {
 		return _runtime;
 	}
 	
+	public void reInit() {
+	    _closedNodes = new ArrayList<Node>();
+	    _openNodes = new ArrayList<Node>();
+	    _currentNode = new Node(_grid.getStart());
+	    _runtime = -1;
+	}
+	
 	/**
 	 * Find the shortest path for the set Grid
 	 * @return list of coordinates for shortest path in order (not including start or end)
@@ -45,6 +51,9 @@ public abstract class Astar {
 	public ArrayList<Coordinate> findPath() throws Exception { // TODO: handle case of no possible path
 		long starttime = System.currentTimeMillis();
 		ArrayList<Coordinate> path;
+		
+		// re-initialize state
+		reInit();
 		
 		// grid should not be null
 		if (_grid == null) {
