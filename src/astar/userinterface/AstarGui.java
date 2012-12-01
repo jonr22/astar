@@ -148,7 +148,7 @@ public class AstarGui {
 						nodeValue = _grid.getValue(new Coordinate(row, col));
 						switch (nodeValue) {
 							case EMPTY:
-								continue; //TODO: check this
+								continue;
 							case BLOCK:
 								nodeColor = blockColor;
 								break;
