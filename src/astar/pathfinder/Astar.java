@@ -68,7 +68,7 @@ public abstract class Astar {
      * Find the shortest path for the set Grid
      * @return list of coordinates for shortest path in order (not including start or end)
      * @throws Exception
-     */ // TODO: handle case of no possible path
+     */
     public ArrayList<Coordinate> findPath() throws Exception {
         long starttime = System.currentTimeMillis();
         ArrayList<Coordinate> path;

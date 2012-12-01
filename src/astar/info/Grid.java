@@ -81,6 +81,8 @@ public class Grid {
      * @throws Exception
      */
     public void setValue(Coordinate coord, NodeType value) throws Exception {
+        NodeType currentValue = NodeType.EMPTY;
+
         // check that coordinate is within the grid
         if (coord.getRow() < 0 || coord.getRow() >= SIZE || coord.getCol() < 0 || coord.getCol() >= SIZE)
             throw new Exception("Invalid row or col number");
@@ -101,7 +103,14 @@ public class Grid {
             _endCoord = coord.clone();
         }
 
-        // TODO: check current value before overwriting it
+        // check if node being set was the start node or end node
+        currentValue = getValue(coord);
+        if (currentValue == NodeType.START) {
+            _startCoord = null;
+        } else if (currentValue == NodeType.END) {
+            _endCoord = null;
+        }
+
         // set value at coordinate
         _gridPath[coord.getRow()][coord.getCol()] = value;
     }
@@ -110,6 +119,9 @@ public class Grid {
      * Clear all values in grid
      */
     public void clear() {
+        _startCoord = null;
+        _endCoord = null;
+
         for (int i = 0; i < SIZE; i++) {
             for (int j = 0; j < SIZE; j++) {
                 _gridPath[i][j] = NodeType.EMPTY;
