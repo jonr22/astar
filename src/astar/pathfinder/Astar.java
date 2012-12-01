@@ -113,7 +113,7 @@ public abstract class Astar {
      * @param node
      * @return list of coordinates
      */
-    private ArrayList<Coordinate> rebuildPath(Node node) { // TODO: rebuild this without recursion
+    private ArrayList<Coordinate> rebuildPath(Node node) {
         ArrayList<Coordinate> list;
 
         // if we've reached the root node, return an empty ArrayList
