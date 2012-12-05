@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -102,6 +103,7 @@ public class AstarGui {
         // create GridBoard (the display of the Grid) and add listeners
         _gridBoard = new GridBoard();
         _gridBoard.addMouseListener(new UserInputListener());
+        _gridBoard.addMouseMotionListener(new UserInputListener());
         background.add(_gridBoard, BorderLayout.CENTER);
 
         // display frame
@@ -279,7 +281,7 @@ public class AstarGui {
     /**
      * Handle mouse clicks (to set walls/blocks and start/end nodes)
      */
-    private class UserInputListener implements MouseListener {
+    private class UserInputListener implements MouseListener, MouseMotionListener {
         private Coordinate _coord = new Coordinate(); // hold the currently clicked on coordinate
 
         /**
@@ -302,6 +304,18 @@ public class AstarGui {
 
         }
 
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            Coordinate coord = new Coordinate(
+                    (e.getY() * Grid.SIZE) /_gridBoard.getHeight(),
+                    (e.getX() * Grid.SIZE) /_gridBoard.getWidth());
+
+            if (!_coord.isEqual(coord)) {
+                _coord = coord.clone();
+                addBlock();
+            }
+        }
+
         // Ignore all other mouse events
         @Override
         public void mousePressed(MouseEvent e) {}
@@ -311,6 +325,8 @@ public class AstarGui {
         public void mouseEntered(MouseEvent e) {}
         @Override
         public void mouseExited(MouseEvent e) {}
+        @Override
+        public void mouseMoved(MouseEvent e) {}
 
         /**
          * Add/Remove a block/wall to the grid at the current Coordinate
