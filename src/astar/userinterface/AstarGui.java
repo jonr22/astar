@@ -47,7 +47,8 @@ public class AstarGui {
     private Astar _implementation = AstarFactory.getDefault();
     private JLabel _infoLabel;
 
-    private static final String INFO_STRING = "Time: %d ms  Path: %d units";
+    private static final String INFO_STRING = "Time: %d ms  |  Steps: %d  |  Path: %d units";
+    private static final String DEFAULT_INFO_STRING = "Time: 0 ms  |  Steps: 0  |  Path: 0 units";
 
     /**
      * Create the GUI and instantiate the grid displayed to the user
@@ -94,7 +95,7 @@ public class AstarGui {
 
         // add default text to statistics bar
         _infoLabel = new JLabel();
-        _infoLabel.setText(String.format(INFO_STRING, 0, 0));
+        _infoLabel.setText(DEFAULT_INFO_STRING);
 
         bottomPanel.add(_infoLabel);
 
@@ -203,7 +204,7 @@ public class AstarGui {
     private class ClearGridListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent a) {
-            _infoLabel.setText(String.format(INFO_STRING, 0, 0));
+            _infoLabel.setText(DEFAULT_INFO_STRING);
             _grid.clear();
             _gridBoard.repaint();
         }
@@ -245,7 +246,7 @@ public class AstarGui {
                 }
 
                 // update the statistics info
-                _infoLabel.setText(String.format(INFO_STRING, _implementation.getRuntime(), _implementation.getDistance()));
+                _infoLabel.setText(String.format(INFO_STRING, _implementation.getRuntime(),_implementation.getStepCount(), _implementation.getDistance()));
 
                 // update the GUI
                 _gridBoard.repaint();
@@ -267,7 +268,7 @@ public class AstarGui {
                 _implementation = (Astar)cb.getSelectedItem();
 
                 // reset statistics and clear the current path
-                _infoLabel.setText(String.format(INFO_STRING, 0, 0));
+                _infoLabel.setText(DEFAULT_INFO_STRING);
                 _grid.clearPath();
 
                 // update the GUI

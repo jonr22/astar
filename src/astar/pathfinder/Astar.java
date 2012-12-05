@@ -21,6 +21,7 @@ public abstract class Astar {
     private Node _currentNode = null;
     private long _runtime = -1;
     private int _distance = -1;
+    private int _stepCount = 0;
 
     protected Grid _grid = null;
 
@@ -54,6 +55,14 @@ public abstract class Astar {
     }
 
     /**
+     * Get the number of steps the algorithm took to find the shortest path
+     * @return step count
+     */
+    public int getStepCount() {
+        return _stepCount;
+    }
+
+    /**
      * Re-Initialize internal state of algorithm
      */
     public void reInit() {
@@ -62,6 +71,7 @@ public abstract class Astar {
         _currentNode = new Node(_grid.getStart());
         _runtime = -1;
         _distance = -1;
+        _stepCount = 0;
     }
 
     /**
@@ -149,6 +159,9 @@ public abstract class Astar {
 
             // find the new smallest estimated node
             _currentNode = findSmallestNode();
+
+            // increment number of steps taken
+            _stepCount++;
         }
 
         return _currentNode;
