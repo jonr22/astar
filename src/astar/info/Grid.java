@@ -23,7 +23,7 @@ public class Grid {
     /**
      * length/height of grid
      */
-    public static final int SIZE = 20;
+    public static final int SIZE = 40;
 
     /**
      * cost to move up/down or left/right

@@ -41,14 +41,16 @@ import astar.pathfinder.AstarFactory;
  *
  */
 public class AstarGui {
+    private static final int START_WIDTH = 700;
+    private static final int START_HEIGHT = 700;
+    private static final String INFO_STRING = "Time: %d ms  |  Steps: %d  |  Path: %d units";
+    private static final String DEFAULT_INFO_STRING = "Time: 0 ms  |  Steps: 0  |  Path: 0 units";
+
     private JFrame _frame;
     private GridBoard _gridBoard;
     private Grid _grid;
     private Astar _implementation = AstarFactory.getDefault();
     private JLabel _infoLabel;
-
-    private static final String INFO_STRING = "Time: %d ms  |  Steps: %d  |  Path: %d units";
-    private static final String DEFAULT_INFO_STRING = "Time: 0 ms  |  Steps: 0  |  Path: 0 units";
 
     /**
      * Create the GUI and instantiate the grid displayed to the user
@@ -109,7 +111,7 @@ public class AstarGui {
 
         // display frame
         _frame.getContentPane().add(background);
-        _frame.setSize(500, 500);
+        _frame.setSize(START_WIDTH, START_HEIGHT);
         _frame.setVisible(true);
     }
 
