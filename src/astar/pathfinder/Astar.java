@@ -101,6 +101,7 @@ public abstract class Astar {
 
         // build the shortest path from the node
         path = rebuildPath(small);
+        path.remove(path.size() - 1); // remove the end node from the list
 
         // set the runtime
         _runtime = System.currentTimeMillis() - starttime;
@@ -134,7 +135,10 @@ public abstract class Astar {
      */
     private Node generateNodePaths() throws Exception {
         // while a path to the end node hasn't been found, update the list of open nodes
-        while (!updateNodes()) {
+        while (!_currentNode.getCoord().isEqual(_grid.getEnd())) {
+            // update all nodes
+            updateNodes();
+
             // set the current node to closed
             _closedNodes.add(_currentNode);
             _openNodes.remove(_currentNode);
@@ -186,11 +190,6 @@ public abstract class Astar {
 
             // assume diagonal, and update to lateral if needed
             int distanceToNode = Grid.MOVE_DIAGONAL;
-
-            // if we've found the end node, return true
-            if (node.getCoord().isEqual(_grid.getEnd())) {
-                return true;
-            }
 
             // if the distance is 0, then the node is new as this is always set on existing nodes
             if (node.getDistance() == 0) {

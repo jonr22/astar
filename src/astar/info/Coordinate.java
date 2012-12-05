@@ -15,7 +15,7 @@ public class Coordinate {
     public Coordinate() {}
 
     /**
-     * Constructor - set row and column
+     * Constructor - set row and column of coordinate
      * @param row - The row of the coordinate
      * @param col - The column of the coordinate
      */
