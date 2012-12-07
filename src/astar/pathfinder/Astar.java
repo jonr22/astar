@@ -279,13 +279,13 @@ public abstract class Astar {
         if (_currentNode.getCoord().getRow() > 0) {
             rows.add(_currentNode.getCoord().getRow() - 1);
         }
-        if (_currentNode.getCoord().getRow() < Grid.SIZE - 1) {
+        if (_currentNode.getCoord().getRow() < _grid.getSize() - 1) {
             rows.add(_currentNode.getCoord().getRow() + 1);
         }
         if (_currentNode.getCoord().getCol() > 0) {
             cols.add(_currentNode.getCoord().getCol() - 1);
         }
-        if (_currentNode.getCoord().getCol() < Grid.SIZE - 1) {
+        if (_currentNode.getCoord().getCol() < _grid.getSize() - 1) {
             cols.add(_currentNode.getCoord().getCol() + 1);
         }
 

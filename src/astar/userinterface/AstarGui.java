@@ -43,6 +43,7 @@ import astar.pathfinder.AstarFactory;
 public class AstarGui {
     private static final int START_WIDTH = 700;
     private static final int START_HEIGHT = 700;
+    private static final int GRID_SIZE = 40;
     private static final String INFO_STRING = "Time: %d ms  |  Steps: %d  |  Path: %d units";
     private static final String DEFAULT_INFO_STRING = "Time: 0 ms  |  Steps: 0  |  Path: 0 units";
 
@@ -58,7 +59,7 @@ public class AstarGui {
     public void buildGui() {
 
         // instantiate a new Grid
-        _grid = new Grid();
+        _grid = new Grid(GRID_SIZE);
 
         // create the frame with borders
         _frame = new JFrame("A*");
@@ -151,8 +152,8 @@ public class AstarGui {
                 g2d.fill(new Rectangle2D.Double(0, 0, width, height));
 
                 // draw nodes (do this before grid lines, so that the lines appear on top of blocks)
-                for (int row = 0; row < Grid.SIZE; row++) {
-                    for (int col = 0; col < Grid.SIZE; col++) {
+                for (int row = 0; row < _grid.getSize(); row++) {
+                    for (int col = 0; col < _grid.getSize(); col++) {
 
                         // get appropriate color for NodeType
                         nodeValue = _grid.getValue(new Coordinate(row, col));
@@ -179,10 +180,10 @@ public class AstarGui {
                         // fill in grid block with selected color
                         g2d.setPaint(nodeColor);
                         g2d.fill(new Rectangle2D.Double(
-                            (width * col) / Grid.SIZE,
-                            (height * row) / Grid.SIZE,
-                            width / Grid.SIZE,
-                            height / Grid.SIZE));
+                            (width * col) / _grid.getSize(),
+                            (height * row) / _grid.getSize(),
+                            width / _grid.getSize(),
+                            height / _grid.getSize()));
 
                     }
                 }
@@ -190,9 +191,9 @@ public class AstarGui {
                 // draw grid
                 g2d.setPaint(gridColor);
                 g2d.setStroke(new BasicStroke(lineThickness));
-                for (int lineNum = 0; lineNum <= Grid.SIZE; lineNum++) {
-                    g2d.draw(new Line2D.Double(0, (height * lineNum) / Grid.SIZE, width, (height * lineNum) / Grid.SIZE));
-                    g2d.draw(new Line2D.Double((width * lineNum) / Grid.SIZE, 0, (width * lineNum) / Grid.SIZE, height));
+                for (int lineNum = 0; lineNum <= _grid.getSize(); lineNum++) {
+                    g2d.draw(new Line2D.Double(0, (height * lineNum) / _grid.getSize(), width, (height * lineNum) / _grid.getSize()));
+                    g2d.draw(new Line2D.Double((width * lineNum) / _grid.getSize(), 0, (width * lineNum) / _grid.getSize(), height));
                 }
             } catch (Exception ex) {
                 ex.printStackTrace();
@@ -293,8 +294,8 @@ public class AstarGui {
         @Override
         public void mouseClicked(MouseEvent e) {
             // find and set the coordinates of the current click
-            _coord.setRow((e.getY() * Grid.SIZE) /_gridBoard.getHeight());
-            _coord.setCol((e.getX() * Grid.SIZE) /_gridBoard.getWidth());
+            _coord.setRow((e.getY() * _grid.getSize()) /_gridBoard.getHeight());
+            _coord.setCol((e.getX() * _grid.getSize()) /_gridBoard.getWidth());
 
             // if right mouse was clicked display a context
             //   menu, otherwise add/remove a block to the Grid
@@ -309,15 +310,22 @@ public class AstarGui {
 
         @Override
         public void mouseDragged(MouseEvent e) {
+            // get coordinate
             Coordinate coord = new Coordinate(
-                    (e.getY() * Grid.SIZE) /_gridBoard.getHeight(),
-                    (e.getX() * Grid.SIZE) /_gridBoard.getWidth());
+                    (e.getY() * _grid.getSize()) /_gridBoard.getHeight(),
+                    (e.getX() * _grid.getSize()) /_gridBoard.getWidth());
 
-            if (!_coord.isEqual(coord)) {
+            // mouse drag will continue to pump messages after mouse has been
+            //   dragged off the GUI, so make sure the drag is within the gui,
+            //   also make sure that the coordinate is not the same as the last
+            //   one (ie, message pump was too soon)
+            if (coord.getRow() >= 0 && coord.getRow() < _grid.getSize() &&
+                    coord.getCol() >= 0 && coord.getCol() < _grid.getSize() &&
+                    !coord.isEqual(_coord)) {
                 _coord = coord.clone();
                 addBlock();
             }
-        }
+         }
 
         // Ignore all other mouse events
         @Override

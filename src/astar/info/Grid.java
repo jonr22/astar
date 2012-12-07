@@ -11,6 +11,7 @@ public class Grid {
     private Coordinate _startCoord = null;
     private Coordinate _endCoord = null;
     private NodeType[][] _gridPath;
+    private int _size = 20;
 
     /**
      * Types of nodes within grid
@@ -19,11 +20,6 @@ public class Grid {
     {
         START, END, BLOCK, EMPTY, PATH;
     }
-
-    /**
-     * length/height of grid
-     */
-    public static final int SIZE = 40;
 
     /**
      * cost to move up/down or left/right
@@ -35,12 +31,23 @@ public class Grid {
      */
     public static final int MOVE_DIAGONAL = 3;
 
-    /**
-     * Constructor
-     */
-    public Grid() {
-        _gridPath = new NodeType[SIZE][SIZE];
+   /**
+    * Constructor - Set the size of the grid (grids are square, the
+    * size of a single side)
+    * @param size
+    */
+    public Grid(int size) {
+        _size = size;
+        _gridPath = new NodeType[_size][_size];
         clear();
+    }
+
+    /**
+     * Get the size of the grid (grids are square, the size of a single side)
+     * @return size
+     */
+    public int getSize() {
+        return _size;
     }
 
     /**
@@ -67,7 +74,7 @@ public class Grid {
      */
     public NodeType getValue(Coordinate coord) throws Exception {
         // check that coordinate is within the grid
-        if (coord.getRow() < 0 || coord.getRow() >= SIZE || coord.getCol() < 0 || coord.getCol() >= SIZE)
+        if (coord.getRow() < 0 || coord.getRow() >= _size || coord.getCol() < 0 || coord.getCol() >= _size)
             throw new Exception("Invalid row or col number");
 
         // return the value at the coordinate
@@ -84,7 +91,7 @@ public class Grid {
         NodeType currentValue = NodeType.EMPTY;
 
         // check that coordinate is within the grid
-        if (coord.getRow() < 0 || coord.getRow() >= SIZE || coord.getCol() < 0 || coord.getCol() >= SIZE)
+        if (coord.getRow() < 0 || coord.getRow() >= _size || coord.getCol() < 0 || coord.getCol() >= _size)
             throw new Exception("Invalid row or col number");
 
         // if start node, remove any previous start nodes and set the start node coordinate
@@ -122,8 +129,8 @@ public class Grid {
         _startCoord = null;
         _endCoord = null;
 
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
+        for (int i = 0; i < _size; i++) {
+            for (int j = 0; j < _size; j++) {
                 _gridPath[i][j] = NodeType.EMPTY;
             }
         }
@@ -133,8 +140,8 @@ public class Grid {
      * Clear the currently set path
      */
     public void clearPath() {
-        for (int i = 0; i < SIZE; i++) {
-            for (int j = 0; j < SIZE; j++) {
+        for (int i = 0; i < _size; i++) {
+            for (int j = 0; j < _size; j++) {
                 if (_gridPath[i][j] == NodeType.PATH) {
                     _gridPath[i][j] = NodeType.EMPTY;
                 }
