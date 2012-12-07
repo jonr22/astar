@@ -12,7 +12,7 @@ public class AstarFactory {
      * Current implementations
      */
     public static enum Implementation {
-        ManhattanMethod, DumbMethod;
+        ManhattanMethod, EuclideanMethod, DumbMethod;
     }
 
     /**
@@ -32,6 +32,8 @@ public class AstarFactory {
         switch(impl) {
             case ManhattanMethod:
                 return new ManhattanMethod();
+            case EuclideanMethod:
+                return new EuclideanMethod();
             case DumbMethod:
                 return new DumbMethod();
             default:

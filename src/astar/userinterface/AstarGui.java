@@ -48,7 +48,6 @@ public class AstarGui {
     private static final String INFO_STRING = "Time: %d ms  |  Steps: %d  |  Path: %d units";
     private static final String DEFAULT_INFO_STRING = "Time: 0 ms  |  Steps: 0  |  Path: 0 units";
     private static final String GRID_SIZE_LABEL = "Grid Size:";
-
     private static final Color BLOCK_COLOR = Color.DARK_GRAY;
     private static final Color BACKGROUND_COLOR = Color.WHITE;
     private static final Color GRID_COLOR = Color.BLACK;

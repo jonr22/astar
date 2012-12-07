@@ -9,15 +9,19 @@ import astar.info.Grid;
  * @author Jonathan Reimels
  *
  */
-public class ManhattanMethod extends Astar {
+public class EuclideanMethod extends Astar {
 
     @Override
     protected int estimateDistance(Coordinate coord) {
-        return (Math.abs(coord.getRow() - _grid.getEnd().getRow()) + Math.abs(coord.getCol() - _grid.getEnd().getCol())) * Grid.MOVE_LATERAL;
+        int x = Math.abs(coord.getRow() - _grid.getEnd().getRow());
+        int y = Math.abs(coord.getCol() - _grid.getEnd().getCol());
+        int squared = x*x + y*y;
+        int distance = (int)Math.floor(Math.sqrt(squared));
+        return distance * Grid.MOVE_LATERAL;
     }
 
     @Override
     public String toString() {
-        return "Manhattan Method";
+        return "Euclidean Method";
     }
 }
