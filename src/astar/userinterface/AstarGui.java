@@ -43,7 +43,7 @@ import astar.pathfinder.AstarFactory;
 public class AstarGui {
     private static final int START_WIDTH = 700;
     private static final int START_HEIGHT = 700;
-    private static final int GRID_SIZE = 20;
+    private static final int DEFAULT_GRID_SIZE = 30;
     private static final String INFO_STRING = "Time: %d ms  |  Steps: %d  |  Path: %d units";
     private static final String DEFAULT_INFO_STRING = "Time: 0 ms  |  Steps: 0  |  Path: 0 units";
 
@@ -59,7 +59,7 @@ public class AstarGui {
     public void buildGui() {
 
         // instantiate a new Grid
-        _grid = new Grid(GRID_SIZE);
+        _grid = new Grid(DEFAULT_GRID_SIZE);
 
         // create the frame with borders
         _frame = new JFrame("A*");
@@ -82,7 +82,7 @@ public class AstarGui {
         // create and populate combobox for grid sizes
         Integer[] gridSizes = {10, 20, 30, 40, 50, 60 ,70 ,80, 90, 100};
         JComboBox gridSizeList = new JComboBox(gridSizes);
-        gridSizeList.setSelectedIndex(1);
+        gridSizeList.setSelectedItem(DEFAULT_GRID_SIZE);
 
         // set actions for top panel buttons
         clearBtn.addActionListener(new ClearGridListener());
