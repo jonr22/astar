@@ -4,7 +4,7 @@ import astar.info.Coordinate;
 import astar.info.Grid;
 
 /**
- * The manhattan method involves treating the path as a city grid similar to how Manhattan is laid out
+ * The Euclidean method determines the diagonal distance (a^2 + b^2)^(1/2) to the end node
  *
  * @author Jonathan Reimels
  *

@@ -100,14 +100,8 @@ public abstract class Astar {
             return null;
         }
 
-        // set distance, the last node has the total distance except
-        //   that it's missing the distance to the end node
-        if (small.getCoord().getRow() == _grid.getEnd().getRow() ||
-                small.getCoord().getCol() == _grid.getEnd().getCol()) {
-            _distance = small.getDistance() + Grid.MOVE_LATERAL;
-        } else {
-            _distance = small.getDistance() + Grid.MOVE_DIAGONAL;
-        }
+        // set distance
+        _distance = small.getDistance();
 
         // build the shortest path from the node
         path = rebuildPath(small);
