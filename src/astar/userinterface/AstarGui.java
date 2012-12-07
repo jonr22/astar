@@ -43,7 +43,7 @@ import astar.pathfinder.AstarFactory;
 public class AstarGui {
     private static final int START_WIDTH = 700;
     private static final int START_HEIGHT = 700;
-    private static final int GRID_SIZE = 40;
+    private static final int GRID_SIZE = 20;
     private static final String INFO_STRING = "Time: %d ms  |  Steps: %d  |  Path: %d units";
     private static final String DEFAULT_INFO_STRING = "Time: 0 ms  |  Steps: 0  |  Path: 0 units";
 
@@ -79,15 +79,22 @@ public class AstarGui {
         // create and populate combobox with implemented algorithms
         JComboBox implementationList = new JComboBox(instantiateAlgorithms());
 
+        // create and populate combobox for grid sizes
+        Integer[] gridSizes = {10, 20, 30, 40, 50, 60 ,70 ,80, 90, 100};
+        JComboBox gridSizeList = new JComboBox(gridSizes);
+        gridSizeList.setSelectedIndex(1);
+
         // set actions for top panel buttons
         clearBtn.addActionListener(new ClearGridListener());
         runBtn.addActionListener(new  RunGridListener());
         implementationList.addActionListener(new SelectImplementationListener());
+        gridSizeList.addActionListener(new SelectGridSizeListener());
 
         // add buttons/comboboxes to top panel
         topPanel.add(runBtn);
         topPanel.add(clearBtn);
         topPanel.add(implementationList);
+        topPanel.add(gridSizeList);
 
         // add panel to main window
         background.add(topPanel, BorderLayout.NORTH);
@@ -213,6 +220,7 @@ public class AstarGui {
         }
     }
 
+
     /**
      * Run the selected algorithm
      */
@@ -273,6 +281,29 @@ public class AstarGui {
                 // reset statistics and clear the current path
                 _infoLabel.setText(DEFAULT_INFO_STRING);
                 _grid.clearPath();
+
+                // update the GUI
+                _gridBoard.repaint();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * Set Grid Size
+     */
+    private class SelectGridSizeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent a) {
+            try {
+                // get currently selected Astar Implementation in the combobox
+                JComboBox cb = (JComboBox)a.getSource();
+                int size = (Integer)cb.getSelectedItem();
+
+                // reset statistics and clear the current path
+                _infoLabel.setText(DEFAULT_INFO_STRING);
+                _grid = new Grid(size);
 
                 // update the GUI
                 _gridBoard.repaint();
