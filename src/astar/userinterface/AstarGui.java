@@ -41,12 +41,22 @@ import astar.pathfinder.AstarFactory;
  *
  */
 public class AstarGui {
+    // Constants
     private static final int START_WIDTH = 700;
     private static final int START_HEIGHT = 700;
     private static final int DEFAULT_GRID_SIZE = 30;
     private static final String INFO_STRING = "Time: %d ms  |  Steps: %d  |  Path: %d units";
     private static final String DEFAULT_INFO_STRING = "Time: 0 ms  |  Steps: 0  |  Path: 0 units";
+    private static final String GRID_SIZE_LABEL = "Grid Size:";
 
+    private static final Color BLOCK_COLOR = Color.DARK_GRAY;
+    private static final Color BACKGROUND_COLOR = Color.WHITE;
+    private static final Color GRID_COLOR = Color.BLACK;
+    private static final Color START_COLOR = Color.GREEN;
+    private static final Color END_COLOR = Color.RED;
+    private static final Color PATH_COLOR = Color.BLUE;
+
+    // state
     private JFrame _frame;
     private GridBoard _gridBoard;
     private Grid _grid;
@@ -69,8 +79,13 @@ public class AstarGui {
         background.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
         // create the top panel
-        JPanel topPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout());
+        JPanel topPanel = new JPanel(new BorderLayout());
+        JPanel leftTopPanel = new JPanel();
+        leftTopPanel.setLayout(new FlowLayout());
+        JPanel centerTopPanel = new JPanel();
+        centerTopPanel.setLayout(new FlowLayout());
+        JPanel rightTopPanel = new JPanel();
+        rightTopPanel.setLayout(new FlowLayout());
 
         // create buttons for the top panel
         JButton runBtn = new JButton("Run");
@@ -90,13 +105,23 @@ public class AstarGui {
         implementationList.addActionListener(new SelectImplementationListener());
         gridSizeList.addActionListener(new SelectGridSizeListener());
 
-        // add buttons/comboboxes to top panel
-        topPanel.add(runBtn);
-        topPanel.add(clearBtn);
-        topPanel.add(implementationList);
-        topPanel.add(gridSizeList);
+        // create label for grid size combobox
+        JLabel gridSizeLabel = new JLabel();
+        gridSizeLabel.setText(GRID_SIZE_LABEL);
 
-        // add panel to main window
+        // add buttons/comboboxes to top panel
+        centerTopPanel.add(runBtn);
+        centerTopPanel.add(clearBtn);
+        leftTopPanel.add(implementationList);
+        rightTopPanel.add(gridSizeLabel);
+        rightTopPanel.add(gridSizeList);
+
+        // add panels to top panel
+        topPanel.add(leftTopPanel, BorderLayout.WEST);
+        topPanel.add(centerTopPanel, BorderLayout.CENTER);
+        topPanel.add(rightTopPanel, BorderLayout.EAST);
+
+        // add top panel to main window
         background.add(topPanel, BorderLayout.NORTH);
 
         // create bottom panel to display statistics
@@ -138,13 +163,7 @@ public class AstarGui {
             try {
                 super.paintComponent(g);
 
-                // set colors for various items
-                Color blockColor = Color.DARK_GRAY;
-                Color backgroundColor = Color.WHITE;
-                Color gridColor = Color.BLACK;
-                Color startColor = Color.GREEN;
-                Color endColor = Color.RED;
-                Color pathColor = Color.BLUE;
+                // hold node color to set
                 Color nodeColor;
 
                 Grid.NodeType nodeValue;
@@ -155,7 +174,7 @@ public class AstarGui {
                 Graphics2D g2d = (Graphics2D) g;
 
                 // draw background
-                g2d.setPaint(backgroundColor);
+                g2d.setPaint(BACKGROUND_COLOR);
                 g2d.fill(new Rectangle2D.Double(0, 0, width, height));
 
                 // draw nodes (do this before grid lines, so that the lines appear on top of blocks)
@@ -168,19 +187,19 @@ public class AstarGui {
                             case EMPTY:
                                 continue;
                             case BLOCK:
-                                nodeColor = blockColor;
+                                nodeColor = BLOCK_COLOR;
                                 break;
                             case START:
-                                nodeColor = startColor;
+                                nodeColor = START_COLOR;
                                 break;
                             case END:
-                                nodeColor = endColor;
+                                nodeColor = END_COLOR;
                                 break;
                             case PATH:
-                                nodeColor = pathColor;
+                                nodeColor = PATH_COLOR;
                                 break;
                             default:
-                                nodeColor = backgroundColor;
+                                nodeColor = BACKGROUND_COLOR;
                                 break;
                         }
 
@@ -196,7 +215,7 @@ public class AstarGui {
                 }
 
                 // draw grid
-                g2d.setPaint(gridColor);
+                g2d.setPaint(GRID_COLOR);
                 g2d.setStroke(new BasicStroke(lineThickness));
                 for (int lineNum = 0; lineNum <= _grid.getSize(); lineNum++) {
                     g2d.draw(new Line2D.Double(0, (height * lineNum) / _grid.getSize(), width, (height * lineNum) / _grid.getSize()));
@@ -297,11 +316,11 @@ public class AstarGui {
         @Override
         public void actionPerformed(ActionEvent a) {
             try {
-                // get currently selected Astar Implementation in the combobox
+                // get currently selected grid size
                 JComboBox cb = (JComboBox)a.getSource();
                 int size = (Integer)cb.getSelectedItem();
 
-                // reset statistics and clear the current path
+                // reset statistics and update the grid
                 _infoLabel.setText(DEFAULT_INFO_STRING);
                 _grid = new Grid(size);
 
