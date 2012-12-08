@@ -9,16 +9,16 @@ import astar.info.Coordinate;
  * @author Jonathan Reimels
  *
  */
-public class DumbMethod extends Astar{
+public class DijkstraMethod extends Astar{
 
     @Override
     protected int estimateDistance(Coordinate coord) {
-        return 1;
+        return 0;
     }
 
     @Override
     public String toString() {
-        return "Dumb Method";
+        return "Dijkstra's Method";
     }
 
 }

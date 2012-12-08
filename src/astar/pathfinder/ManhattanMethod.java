@@ -4,7 +4,9 @@ import astar.info.Coordinate;
 import astar.info.Grid;
 
 /**
- * The manhattan method involves treating the path as a city grid similar to how Manhattan is laid out
+ * The manhattan method involves treating the path as a city grid similar to how Manhattan is laid out.
+ * This method is not admissable, so it is not guaranteed to always find the shortest path, however, it
+ * is much quicker than other algorithms, and finds paths that are close to the shortest.
  *
  * @author Jonathan Reimels
  *
